@@ -44,4 +44,5 @@ Distributed under the **GPL-3.0 License**. See [LICENSE](LICENSE) for more infor
 <div align="center">
   Created by Outsider.NOC
 </div>
+
 [![Discord](https://img.shields.io/badge/Discord-Join%20Server-5865F2?logo=discord&logoColor=white)](https://discord.gg/vvkke4TY4v)
