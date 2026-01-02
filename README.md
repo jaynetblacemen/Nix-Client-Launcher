@@ -26,11 +26,8 @@ Nix-client launcher is a Open-source launcher for Nix client, It is made with Go
 - **Wayland native**: Our launcher is fullly wayland native.
 
 ## Usage
-
 Nix-clinet is distributed as an **AppImage**.
 
-### Quick Start
-SOON!
 
 ### Note: This launcher targets Linux only. Supporting Windows would require bundling GTK, which goes against the goal of keeping the launcher lightweight and native.
 
