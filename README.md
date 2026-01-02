@@ -46,5 +46,8 @@ Distributed under the **GPL-3.0 License**. See [LICENSE](LICENSE) for more infor
 </div>
 
 <div align="center">
-[![Discord](https://img.shields.io/badge/Discord-Join%20Server-5865F2?logo=discord&logoColor=white)](https://discord.gg/vvkke4TY4v)
+  <a href="https://discord.gg/vvkke4TY4v">
+    <img src="https://img.shields.io/badge/Discord-Join%20Server-5865F2?logo=discord&logoColor=white" />
+  </a>
 </div>
+
