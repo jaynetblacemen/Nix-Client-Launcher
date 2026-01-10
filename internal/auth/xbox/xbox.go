@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 )
@@ -70,6 +71,7 @@ func AuthenticateXboxLive(msAccessToken string) (*XboxAuthResponse, error) {
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", "Nix-Client-Launcher/1.0")
 
 	client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := client.Do(req)
@@ -79,7 +81,8 @@ func AuthenticateXboxLive(msAccessToken string) (*XboxAuthResponse, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("xbox live auth failed: %s", resp.Status)
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("xbox live auth failed: %s - Body: %s", resp.Status, string(bodyBytes))
 	}
 
 	var authResp XboxAuthResponse
@@ -111,6 +114,7 @@ func AuthenticateXSTS(xboxToken string) (*XboxAuthResponse, error) {
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", "Nix-Client-Launcher/1.0")
 
 	client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := client.Do(req)
@@ -120,7 +124,8 @@ func AuthenticateXSTS(xboxToken string) (*XboxAuthResponse, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("xsts auth failed: %s", resp.Status)
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("xsts auth failed: %s - Body: %s", resp.Status, string(bodyBytes))
 	}
 
 	var authResp XboxAuthResponse

@@ -4,7 +4,6 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"math/rand"
-	"strings"
 	"time"
 )
 

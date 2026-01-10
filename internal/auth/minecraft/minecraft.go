@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 )
@@ -53,6 +54,7 @@ type EntitlementsResponse struct {
 
 // AuthenticateMinecraft exchanges XSTS Token and User Hash for Minecraft Access Token
 func AuthenticateMinecraft(userHash, xstsToken string) (*MinecraftAuthResponse, error) {
+	// Ensure the identityToken is formatted correctly: "XBL3.0 x=<user_hash>;<xsts_token>"
 	reqBody := MinecraftAuthRequest{
 		IdentityToken: fmt.Sprintf("XBL3.0 x=%s;%s", userHash, xstsToken),
 	}
@@ -68,6 +70,7 @@ func AuthenticateMinecraft(userHash, xstsToken string) (*MinecraftAuthResponse, 
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", "Nix-Client-Launcher/1.0")
 
 	client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := client.Do(req)
@@ -77,7 +80,9 @@ func AuthenticateMinecraft(userHash, xstsToken string) (*MinecraftAuthResponse, 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("minecraft auth failed: %s", resp.Status)
+		// Read error body for debugging
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("minecraft auth failed: %s - Body: %s", resp.Status, string(bodyBytes))
 	}
 
 	var authResp MinecraftAuthResponse
@@ -94,6 +99,7 @@ func CheckOwnership(accessToken string) (bool, error) {
 		return false, err
 	}
 	req.Header.Set("Authorization", "Bearer "+accessToken)
+	req.Header.Set("User-Agent", "Nix-Client-Launcher/1.0")
 
 	client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := client.Do(req)
@@ -103,7 +109,8 @@ func CheckOwnership(accessToken string) (bool, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return false, fmt.Errorf("failed to check entitlements: %s", resp.Status)
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		return false, fmt.Errorf("failed to check entitlements: %s - Body: %s", resp.Status, string(bodyBytes))
 	}
 
 	var entResp EntitlementsResponse
@@ -128,6 +135,7 @@ func GetProfile(accessToken string) (*MinecraftProfile, error) {
 		return nil, err
 	}
 	req.Header.Set("Authorization", "Bearer "+accessToken)
+	req.Header.Set("User-Agent", "Nix-Client-Launcher/1.0")
 
 	client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := client.Do(req)
@@ -137,7 +145,8 @@ func GetProfile(accessToken string) (*MinecraftProfile, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("failed to get profile: %s", resp.Status)
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("failed to get profile: %s - Body: %s", resp.Status, string(bodyBytes))
 	}
 
 	var profile MinecraftProfile

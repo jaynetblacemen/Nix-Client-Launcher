@@ -7,10 +7,6 @@
 *.so
 *.dylib
 
-# Go
-go.sum
-vendor/
-
 # IDEs
 .idea/
 .vscode/
