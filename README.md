@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="media/logo.png" alt="Nix" width="140"/>
+<img src="read/logo.png" alt="Nix" width="140"/>
 
 # Nix-client launcher
 
