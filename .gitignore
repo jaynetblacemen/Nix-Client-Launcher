@@ -1,0 +1,21 @@
+# Binaries
+/bin/
+/dist/
+/deploy/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go
+go.sum
+vendor/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
