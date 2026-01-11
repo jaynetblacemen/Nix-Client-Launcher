@@ -1,0 +1,16 @@
+{
+  "modpacks": [
+    {
+      "version": "Prototype",
+      "minecraft": "1.21.11",
+      "loader": "fabric",
+      "url": "https://cdn.modrinth.com/data/iLseKUBc/versions/s1LNBzeY/Nix%20client%201.0.0.mrpack"
+    },
+    {
+      "version": "1.1.0",
+      "minecraft": "1.21",
+      "loader": "fabric",
+      "url": "https://example.com/modpacks/modpack-1.1.0.zip"
+    }
+  ]
+}
